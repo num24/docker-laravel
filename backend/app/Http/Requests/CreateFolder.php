@@ -25,6 +25,14 @@ class CreateFolder extends FormRequest
     {
         return [
             'title' => 'required',
+            'title' => 'required|max:20',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title' => 'フォルダ名',
         ];
     }
 }
