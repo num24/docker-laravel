@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Folder;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateFolder;
 
 class FolderController extends Controller
 {
@@ -11,7 +12,7 @@ class FolderController extends Controller
     {
         return view('folders/create');
     }
-    public function create(Request $request)
+    public function create(CreateFolder $request)
     {
         //フォルダモデルのインスタンスを作成する
         $folder = new Folder();
@@ -20,7 +21,7 @@ class FolderController extends Controller
         //インスタンスの状態をデータベースに書き込む
         $folder->save();
 
-        return redirect()->route('tasks.index',[
+        return redirect()->route('tasks.index', [
             'id' => $folder->id,
         ]);
     }
