@@ -6,6 +6,7 @@ use App\Models\Folder;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTask;
+use App\Http\Requests\EditTask;
 
 class TaskController extends Controller
 {
@@ -32,7 +33,7 @@ class TaskController extends Controller
     public function showCreateForm(int $id)
     {
         return view('tasks/create', [
-            'folder_id' => $id
+            'folder_id' => $id,
         ]);
     }
 
@@ -60,5 +61,22 @@ class TaskController extends Controller
         return redirect()->route('tasks.index', [
             'id' => $current_folder->id,
         ]);
+    }
+
+    public function edit(int $id, int $task_id, EditTask $request)
+    {
+        //リクエストされた ID でタスクデータを取得
+        $task = Task::find($task_id);
+
+        // 編集対象のタスクデータに入力値を詰めて save
+        $task->title = $request->title;
+        $task->status = $request->status;
+        $task->due_date = $request->due_date;
+        $task->save();
+
+        // 編集対象のタスクが属するタスク一覧画面へリダイレクト
+        return redirect()->route('tasks.index', [
+        'id' => $task->folder_id,
+    ]);
     }
 }

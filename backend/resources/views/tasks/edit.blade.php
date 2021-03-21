@@ -1,8 +1,7 @@
 @extends('layout')
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+@include('share.flatpickr.styles')
 @endsection
 
 @section('content')
@@ -30,7 +29,7 @@
                         <div class="form-group">
                             <label for="status">状態</label>
                             <select name="status" id="status" class="form-control">
-                                @foreach(\App\Task::STATUS as $key => $val)
+                                @foreach(\App\Models\Task::STATUS as $key => $val)
                                 <option value="{{ $key }}" {{ $key==old('status', $task->status) ? 'selected' : '' }}
                                     >
                                     {{ $val['label'] }}
@@ -55,13 +54,5 @@
 @endsection
 
 @section('scripts')
-<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
-<script>
-    flatpickr(document.getElementById('due_date'), {
-        locale: 'ja',
-        dateFormat: "Y/m/d",
-        minDate: new Date()
-    });
-</script>
+@include('share.flatpickr.scripts')
 @endsection
